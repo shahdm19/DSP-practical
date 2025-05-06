@@ -34,6 +34,24 @@ def classify_frames(frames, i_frame_interval=10):
     
     return frame_types
 
+def show_video(video_path):
+    cap = cv2.VideoCapture(video_path)
+    
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+            
+        cv2.putText(frame, "Original Video", (50, 50), 
+                   cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
+        
+        cv2.imshow('Video', frame)
+        if cv2.waitKey(25) & 0xFF == 27:  
+            break
+    
+    cap.release()
+    cv2.destroyAllWindows()
+
 video_path = r"D:\XO XO\Uni projects\30FPS Video.mp4"
 frames = process_video(video_path)
 
@@ -51,4 +69,4 @@ print("\n[Frame Classification Check]")
 print(f"First 15 frame types: {frame_types[:15]}")
 print(f"Total I-frames: {frame_types.count('I')}")
 print(f"Total P-frames: {frame_types.count('P')}")
-
+show_video(video_path)
